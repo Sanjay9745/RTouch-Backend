@@ -5,8 +5,10 @@ const mongoose = require("mongoose");
 const cookieParser = require("cookie-parser");
 const session = require("express-session");
 const { sendMail } = require("./emailController");
-const { config } = require("dotenv");
+
+const cors = require("cors")
 //use middlewares
+app.use(cors())
 app.use(cookieParser());
 app.use(
   session({
@@ -60,6 +62,7 @@ app.use(express.static("public"));
 
 app.post("/api/add-booking", async (req, res) => {
   try {
+    console.log(req.body);
     const { time, date, text, email, name, phoneNumber } = req.body;
 
     // Create a new booking
@@ -96,7 +99,7 @@ app.post("/api/add-booking", async (req, res) => {
       "New Booking",
       `<h1>New Booking</h1><p>Time: ${time}</p><p>Date: ${date}</p><p>Text: ${text}</p><p>Email: ${email}</p><p>Phone Number: ${phoneNumber}</p><p>Name: ${name}</p>`
     );
-    res.send("success");
+    res.redirect("https://r-touch.vercel.app");
   } catch (err) {
     console.error(err);
     res.status(500).send("An error occurred");
