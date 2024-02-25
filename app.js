@@ -59,7 +59,9 @@ const User = mongoose.model("User", userSchema);
 
 //set static folder
 app.use(express.static("public"));
-
+app.get("/",async(req,res)=>{
+  res.send("hello guys")
+})
 app.post("/api/add-booking", async (req, res) => {
   try {
     console.log(req.body);
